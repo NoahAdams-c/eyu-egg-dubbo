@@ -1,6 +1,6 @@
 {
   "name": "eyu-egg-dubbo",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "",
   "eggPlugin": {
     "name": "eyuEggDubbo",
@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "@apachedubbo/dubbo": "^3.0.0-alpha",
+    "@apachedubbo/dubbo-express": "^3.0.0-alpha",
     "@apachedubbo/dubbo-node": "^3.0.0-alpha",
     "@bufbuild/buf": "^1.39.0",
     "@bufbuild/protobuf": "^1.10.0",

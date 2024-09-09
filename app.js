@@ -6,20 +6,12 @@
  * @LastEditors: chenchen
  * @LastEditTime: 2024-09-03 14:29:28
  */
-const path = require('path');
-const { initPlugin } = require('./lib/dubbo');
+const createDubboInstance = require('./lib/dubbo');
 
 module.exports = app => {
   // TODO: 初始化
-  app.beforeStart(async () => {
-    if (app.config.dubbo.app) {
-      initPlugin(app);
-    }
-    app.loader.loadToApp(path.join(app.baseDir, 'app/dubbo/impl'), 'dubbo.impl');
-    Object.defineProperty(app, 'router', {
-      dubbo(protoName, impls) {
-        app.dubbo.registRoute(protoName, impls);
-      },
-    });
-  });
+  app.dubbo = createDubboInstance(app);
+  app.router.dubbo = (protoName, impls) => {
+    app.dubbo.registRoute(protoName, impls);
+  };
 };
