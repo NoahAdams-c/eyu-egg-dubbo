@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const protobuf = require('@bufbuild/protobuf');
 const { createEcmaScriptPlugin, runNodeJs } = require('@bufbuild/protoplugin');
 
