@@ -7,7 +7,7 @@
  * @LastEditTime: 2024-09-03 14:29:28
  */
 const path = require('path');
-const { initPlugin } = require(`${__dirname}/lib/dubbo`);
+const { initPlugin } = require('./lib/dubbo');
 
 module.exports = app => {
   // TODO: 初始化

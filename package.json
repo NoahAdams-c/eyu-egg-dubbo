@@ -1,6 +1,6 @@
 {
   "name": "eyu-egg-dubbo",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "eggPlugin": {
     "name": "eyuEggDubbo",
@@ -51,7 +51,8 @@
     "app.js",
     "agent.js",
     "config",
-    "app"
+    "app",
+    "lib"
   ],
   "ci": {
     "version": "16, 18"
