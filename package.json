@@ -1,0 +1,68 @@
+{
+  "name": "eyu-egg-dubbo",
+  "version": "0.1.0",
+  "description": "",
+  "eggPlugin": {
+    "name": "eyuEggDubbo",
+    "env": [
+      "local",
+      "test",
+      "unittest",
+      "prod"
+    ]
+  },
+  "keywords": [
+    "egg",
+    "eggPlugin",
+    "egg-plugin"
+  ],
+  "dependencies": {
+    "@apachedubbo/dubbo": "^3.0.0-alpha",
+    "@apachedubbo/dubbo-node": "^3.0.0-alpha",
+    "@bufbuild/protobuf": "^1.10.0"
+  },
+  "devDependencies": {
+    "@bufbuild/buf": "^1.39.0",
+    "@bufbuild/protoc-gen-es": "^1.10.0",
+    "commander": "^12.1.0",
+    "egg": "^3",
+    "egg-bin": "^5",
+    "egg-ci": "^2",
+    "egg-mock": "^5",
+    "eslint": "^8",
+    "eslint-config-egg": "^12"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "bin": {
+    "edubbo": "bin/buf_gen.js"
+  },
+  "scripts": {
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint .",
+    "ci": "npm run lint && npm run cov",
+    "buf-gen": "buf generate"
+  },
+  "files": [
+    "app.js",
+    "agent.js",
+    "config",
+    "app"
+  ],
+  "ci": {
+    "version": "16, 18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoahAdams-c/eyu-egg-dubbo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NoahAdams-c/eyu-egg-dubbo/issues"
+  },
+  "homepage": "https://github.com/NoahAdams-c/eyu-egg-dubbo#readme",
+  "author": "cc",
+  "license": "MIT"
+}
