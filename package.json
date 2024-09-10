@@ -1,6 +1,6 @@
 {
   "name": "eyu-egg-dubbo",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "eggPlugin": {
     "name": "eyuEggDubbo",

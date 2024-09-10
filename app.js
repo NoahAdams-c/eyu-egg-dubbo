@@ -10,6 +10,7 @@ const createDubboInstance = require('./lib/dubbo');
 
 module.exports = app => {
   // TODO: 初始化
+  app.loader.loadToApp(path.join(app.config.baseDir, 'app', 'dubbo', 'impl'), 'dubboImpls');
   app.dubbo = createDubboInstance(app);
   app.router.dubbo = (protoName, impls) => {
     app.dubbo.registRoute(protoName, impls);
