@@ -96,7 +96,7 @@ see [config/config.default.js](config/config.default.js) for more detail.
 
 ## Example
 
-Message protocol
+Message protocol(app/dubbo/proto/example.proto)
 
 ```proto
 syntax = "proto3";
@@ -117,10 +117,12 @@ service ExampleService {
 }
 ```
 
+**Server**
+
 Configuring routes
 
 ```js
-// app/route.js
+// {app_root}/app/route.js
 module.exports = app => {
   const { router, controller } = app;
   router.get('/', controller.home.index);
@@ -132,7 +134,7 @@ module.exports = app => {
 Service implementation
 
 ```js
-// app/dubbo/impl/example
+// {app_root}/app/dubbo/impl/example.js
 const { Service } = require('egg');
 
 class ExampleService extends Service {
@@ -153,13 +155,45 @@ class ExampleService extends Service {
 }
 ```
 
-**server**
+**Client**
 
-**client**
+Configuration service
+
+```js
+// {app_root}/config/config.default.js
+exports.dubbo = {
+  app: true,
+  globalServiceVersion: '1.0.0',
+  globalServiceGroup: 'eyu-egg-dubbo',
+  services: {
+    example: {
+      baseUrl: 'http://127.0.0.1:7001',
+    },
+  },
+};
+```
+
+Invoke service
+
+```js
+// {app_root}/app/controller/home.js
+const { Controller } = require('egg');
+
+class HomeController extends Controller {
+  async index() {
+    const { ctx, app } = this;
+    const res = await app.dubbo.client('example').say({ sentence: 'hello' });
+    ctx.status = 200;
+    ctx.body = res.sentence;
+  }
+}
+
+module.exports = HomeController;
+```
 
 ## Questions & Suggestions
 
-Please open an issue [here](https://github.com/eggjs/egg/issues).
+Please open an issue [here](https://github.com/NoahAdams-c/eyu-egg-dubbo/issues).
 
 ## License
 
