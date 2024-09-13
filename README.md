@@ -1,24 +1,12 @@
-# egg-eyu-egg-dubbo
+# eyu-egg-dubbo
 
 [![NPM version][npm-image]][npm-url]
-[![build status][travis-image]][travis-url]
-[![Test coverage][codecov-image]][codecov-url]
-[![David deps][david-image]][david-url]
-[![Known Vulnerabilities][snyk-image]][snyk-url]
 [![npm download][download-image]][download-url]
 
-[npm-image]: https://img.shields.io/npm/v/egg-eyu-egg-dubbo.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/egg-eyu-egg-dubbo
-[travis-image]: https://img.shields.io/travis/eggjs/egg-eyu-egg-dubbo.svg?style=flat-square
-[travis-url]: https://travis-ci.org/eggjs/egg-eyu-egg-dubbo
-[codecov-image]: https://img.shields.io/codecov/c/github/eggjs/egg-eyu-egg-dubbo.svg?style=flat-square
-[codecov-url]: https://codecov.io/github/eggjs/egg-eyu-egg-dubbo?branch=master
-[david-image]: https://img.shields.io/david/eggjs/egg-eyu-egg-dubbo.svg?style=flat-square
-[david-url]: https://david-dm.org/eggjs/egg-eyu-egg-dubbo
-[snyk-image]: https://snyk.io/test/npm/egg-eyu-egg-dubbo/badge.svg?style=flat-square
-[snyk-url]: https://snyk.io/test/npm/egg-eyu-egg-dubbo
-[download-image]: https://img.shields.io/npm/dm/egg-eyu-egg-dubbo.svg?style=flat-square
-[download-url]: https://npmjs.org/package/egg-eyu-egg-dubbo
+[npm-image]: https://img.shields.io/npm/v/eyu-egg-dubbo.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/eyu-egg-dubbo
+[download-image]: https://img.shields.io/npm/dm/eyu-egg-dubbo.svg?style=flat-square
+[download-url]: https://npmjs.org/package/eyu-egg-dubbo
 
 <!--
 Description here.
@@ -27,17 +15,55 @@ Description here.
 ## Install
 
 ```bash
-$ npm i egg-eyu-egg-dubbo --save
+$ npm i eyu-egg-dubbo --save
 ```
 
 ## Usage
+
+Register with the plugin list
 
 ```js
 // {app_root}/config/plugin.js
 exports.eyuEggDubbo = {
   enable: true,
-  package: 'egg-eyu-egg-dubbo',
+  package: 'eyu-egg-dubbo',
 };
+```
+
+Project directory
+
+```bash
+- egg-project
+    - app
+        - dubbo
+            - impl
+                - example.js // The RPC service implementation, note that it should be the same as the proto file name
+        - controller
+        - service
+    - config
+        - config.default.js
+        - plugin.js
+    - dubbo
+        - gen
+            - example_dubbo.js // Automatically generated definition file
+            - example_pb.js // Automatically generated definition file
+        - proto
+            - example.proto // Message protocol
+    - package.json
+    - buf.gen.yaml // Automatically generated protobuf configuration file
+    - README.md
+```
+
+Initialize and generate protobuf configuration file
+
+```bash
+npx edubbo init
+```
+
+Generate definition file
+
+```bash
+npx edubbo gen
 ```
 
 ## Configuration
@@ -45,6 +71,24 @@ exports.eyuEggDubbo = {
 ```js
 // {app_root}/config/config.default.js
 exports.eyuEggDubbo = {
+  globalServiceVersion: '1.0.0',
+  globalServiceGroup: 'eyu-egg-dubbo',
+  // nacos naming registry
+  registry: {
+    serverList: [ '' ],
+    namespace: '',
+    username: '',
+    password: '',
+  },
+  // services config for dubbo.client
+  services: {
+    foo: { // service name, note that it should be the same as the proto file name
+      baseUrl: '', // service host
+    },
+    bar: {
+      baseUrl: ''
+    }
+  },
 };
 ```
 
@@ -52,7 +96,66 @@ see [config/config.default.js](config/config.default.js) for more detail.
 
 ## Example
 
-<!-- example here -->
+Message protocol
+
+```proto
+syntax = "proto3";
+
+package apache.dubbo.demo.example.v1;
+
+message SayRequest {
+  string sentence = 1;
+}
+
+message SayResponse {
+  string sentence = 1;
+}
+
+service ExampleService {
+  rpc Say(SayRequest) returns (SayResponse) {}
+  rpc Talk(SayRequest) returns (SayResponse) {}
+}
+```
+
+Configuring routes
+
+```js
+// app/route.js
+module.exports = app => {
+  const { router, controller } = app;
+  router.get('/', controller.home.index);
+
+  router.dubbo({ serviceName: 'example' });
+};
+```
+
+Service implementation
+
+```js
+// app/dubbo/impl/example
+const { Service } = require('egg');
+
+class ExampleService extends Service {
+  say(input) {
+    const { ctx } = this;
+    ctx.status = 200;
+    ctx.body = {
+      sentence: `You said: ${input.sentence}`,
+    };
+  }
+  talk(input) {
+    const { ctx } = this;
+    ctx.status = 200;
+    ctx.body = {
+      sentence: `You talked: ${input.sentence}`,
+    };
+  }
+}
+```
+
+**server**
+
+**client**
 
 ## Questions & Suggestions
 
