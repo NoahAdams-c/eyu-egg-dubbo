@@ -1,6 +1,6 @@
 {
   "name": "eyu-egg-dubbo",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "eggPlugin": {
     "name": "eyuEggDubbo",
@@ -22,7 +22,9 @@
     "@apachedubbo/dubbo-node": "^3.0.0-alpha",
     "@bufbuild/buf": "^1.39.0",
     "@bufbuild/protobuf": "^1.10.0",
-    "@bufbuild/protoc-gen-es": "^1.10.0"
+    "@bufbuild/protoc-gen-es": "^1.10.0",
+    "nacos": "^2.6.0",
+    "protobufjs": "^7.4.0"
   },
   "devDependencies": {
     "commander": "^12.1.0",

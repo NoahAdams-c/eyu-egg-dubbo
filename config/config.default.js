@@ -7,16 +7,17 @@
  */
 exports.dubbo = {
   app: true,
-  registry: {
-    servList: [ '' ],
-    namespace: '',
-    username: '',
-    password: '',
-  },
-  services: {
-    serviceName: {
-      proto: '',
-      baseUrl: '',
-    },
-  },
+  // globalServiceVersion: '1.0.0',
+  // globalServiceGroup: 'eyu-egg-dubbo',
+  // registry: {
+  //   serverList: [ '' ],
+  //   namespace: '',
+  //   username: '',
+  //   password: '',
+  // },
+  // services: {
+  //   serviceName: {
+  //     baseUrl: '',
+  //   },
+  // },
 };
